@@ -1,0 +1,132 @@
+version: '3.8'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.3
+    hostname: zookeeper
+    ports:
+      - target: 2181
+        published: 2181
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+      - zookeeper-logs:/var/lib/zookeeper/log
+      - kafka-config:/etc/kafka/secrets
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_MAX_CLIENT_CNXNS: 0
+      ZOOKEEPER_TICK_TIME: 2000
+      KAFKA_OPTS: -Djava.security.auth.login.config=/etc/kafka/secrets/zookeeper_server_jaas.conf
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+  kafka:
+    image: confluentinc/cp-kafka:7.4.3
+    hostname: kafka
+    ports:
+      - target: 9092
+        published: 9092
+        protocol: tcp
+        mode: ingress
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+      - kafka-config:/etc/kafka/secrets
+      #- scripts:/var/lib/kafka/scripts
+    environment:
+      # KAFKA_BROKER_ID: '1'
+      KAFKA_BROKER_ID_GENERATION_ENABLE: 'true'
+      KAFKA_ADVERTISED_LISTENERS: SSL://kafka:9092,SASL_SSL://kafka:9094
+      KAFKA_LISTENERS: SSL://kafka:9092,SASL_SSL://kafka:9094
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: '180000'
+      KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: '180000'
+      KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'false'
+      KAFKA_SSL_KEYSTORE_FILENAME: kafka.keystore.jks
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: ssl_creds
+      KAFKA_SSL_KEY_CREDENTIALS: ssl_creds
+      KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.truststore.jks
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: ssl_creds
+      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: SSL
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
+      KAFKA_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_SSL_CLIENT_AUTH: required
+      KAFKA_JMX_PORT: 9101
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 1
+      KAFKA_OPTS: -Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_SUPER_USERS: User:admin;User:C=PAYS,ST=VILLE,L=QUARTIER,O=NOM_PARTICIPANT_VALEUR,CN=kafka;
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+  kafka-command:
+    image: confluentinc/cp-kafka:7.4.3
+    hostname: kafka-command
+    entrypoint: bash -c '/var/lib/kafka/scripts/start_kafka.sh'
+    networks:
+      - aip_network
+    volumes:
+      - kafka-config:/etc/kafka/secrets
+      - scripts:/var/lib/kafka/scripts
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: none
+networks:
+  aip_network:
+    name: aip_network
+    driver: overlay
+    attachable: true
+volumes:
+  config-kafka:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config/kafka"
+  zookeeper-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/zookeeper-data"
+  zookeeper-logs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/zookeeper-logs"
+  kafka-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/kafka-data"
+  kafka-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/kafka"
+  scripts:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/scripts"

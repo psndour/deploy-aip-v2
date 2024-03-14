@@ -1,0 +1,683 @@
+version: '3.8'
+services:
+  redis:
+    image: redis/redis-stack-server:6.2.6-v3
+    hostname: redis
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - redis-data:/data
+      - redis-users:/conf
+    environment:
+      - REDIS_ARGS=--rdb-save-incremental-fsync yes --maxmemory-policy volatile-ttl --active-expire-effort 3 --appendonly no --no-appendfsync-on-rewrite no --hz 100 --dynamic-hz yes --aclfile /conf/users.acl
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  moteur-traitement:
+    image: bceao/moteur-traitement:VERSION_AIP
+    hostname: moteur-traitement
+    volumes:
+      - config:/config
+      - certificats:/certificats
+      - journalisation-moteur:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: NB_REPLICAS
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: MDP_KAFKA_TRUSTSTORE_VALEUR
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: ZIPKIN_ECHANTILLON_VALEUR
+      CODE_MEMBRE_PARTICIPANT: CODE_MEMBRE_PARTICIPANT_VALEUR
+      NOM_PARTICIPANT: NOM_PARTICIPANT_VALEUR
+      TYPE_PARTICIPANT: TYPE_PARTICIPANT_VALEUR
+      KAFKA_PASSWORD: MDP_MOTEURTRAITEMENT_KAFKA
+      REDIS_PASSWORD: MDP_MOTEURTRAITEMENT_REDIS
+      CHEMIN_FICHIER_KEYSTORE_SIGNATURE: CHEMIN_FICHIER_KEYSTORE_SIGNATURE_PARTICIPANT
+      ALIAS_CLE_SIGNATURE: ALIAS_CLE_SIGNATURE_PARTICIPANT
+      ALIAS_CERTIFICAT_SIGNATURE: ALIAS_CERTIFICAT_SIGNATURE_PARTICIPANT
+      MDP_SIGNATURE_KEYSTORE: MDP_SIGNATURE_KEYSTORE_PARTICIPANT
+      CHEMIN_FICHIER_CONFIG_HSM: CHEMIN_FICHIER_CONFIG_HSM_PARTICIPANT
+      USER_PIN_HSM: USER_PIN_HSM_PARTICIPANT
+      ALIAS_CLE_PRIVEE_HSM: ALIAS_CLE_PRIVEE_HSM_PARTICIPANT
+      ALIAS_CERTIFICAT_HSM: ALIAS_CERTIFICAT_HSM_PARTICIPANT
+  interface-participant:
+    image: bceao/interface-participant:VERSION_AIP
+    hostname: interface-participant
+    ports:
+      - target: 8081
+        published: 8081
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - config:/config:ro
+      - certificats:/certificats:ro
+      - journalisation-participant:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: NB_REPLICAS
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: MDP_KAFKA_TRUSTSTORE_VALEUR
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: ZIPKIN_ECHANTILLON_VALEUR
+      KAFKA_PASSWORD: MDP_INTERFACEPARTICIPANT_KAFKA
+      REDIS_PASSWORD: MDP_INTERFACEPARTICIPANT_REDIS
+      URL_BASE_PARTICIPANT: URL_BASE_PARTICIPANT_VALEUR
+      MDP_CLIENT_TRUSTSTORE: MDP_CLIENT_TRUSTSTORE_PARTICIPANT
+      MDP_CLIENT_KEY: MDP_CLIENT_KEY_PARTICIPANT
+      MDP_CLIENT_KEYSTORE: MDP_CLIENT_KEYSTORE_PARTICIPANT
+      CHEMIN_FICHIER_KEYSTORE_SIGNATURE: CHEMIN_FICHIER_KEYSTORE_SIGNATURE_PARTICIPANT
+      ALIAS_CLE_SIGNATURE: ALIAS_CLE_SIGNATURE_PARTICIPANT
+      ALIAS_CERTIFICAT_SIGNATURE: ALIAS_CERTIFICAT_SIGNATURE_PARTICIPANT
+      MDP_SIGNATURE_KEYSTORE: MDP_SIGNATURE_KEYSTORE_PARTICIPANT
+      CHEMIN_FICHIER_CONFIG_HSM: CHEMIN_FICHIER_CONFIG_HSM_PARTICIPANT
+      USER_PIN_HSM: USER_PIN_HSM_PARTICIPANT
+      ALIAS_CLE_PRIVEE_HSM: ALIAS_CLE_PRIVEE_HSM_PARTICIPANT
+      ALIAS_CERTIFICAT_HSM: ALIAS_CERTIFICAT_HSM_PARTICIPANT
+      MDP_SERVEUR_KEYSTORE: MDP_SERVEUR_KEYSTORE_PARTICIPANT
+      MDP_SERVEUR_TRUSTSTORE: MDP_SERVEUR_TRUSTSTORE_PARTICIPANT
+  interface-pi:
+    image: bceao/interface-pisfn:VERSION_AIP
+    hostname: interface-pi
+    ports:
+      - target: 8083
+        published: 8083
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - config:/config
+      - certificats:/certificats
+      - journalisation-pi:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: NB_REPLICAS
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: MDP_KAFKA_TRUSTSTORE_VALEUR
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: ZIPKIN_ECHANTILLON_VALEUR
+      KAFKA_PASSWORD: MDP_INTERFACEPI_KAFKA
+      REDIS_PASSWORD: MDP_INTERFACEPI_REDIS
+      URL_BASE_PI: URL_BASE_PI_VALEUR
+      API_KEY_PI: API_KEY_PI_VALEUR
+      VERSION_API_RAC: VERSION_API_RAC_VALEUR
+      VERSION_API_SPI: VERSION_API_SPI_VALEUR
+      PROXY_HOST: PROXY_HOST_VALEUR
+      PROXY_PORT: PROXY_PORT_VALEUR
+      MDP_CLIENT_TRUSTSTORE: MDP_CLIENT_KEYSTORE_PI
+      CHEMIN_FICHIER_CLIENT_MTLS: CHEMIN_FICHIER_CLIENT_MTLS_PI
+      MDP_CLIENT_KEY: MDP_CLIENT_KEY_PI
+      MDP_CLIENT_KEYSTORE: MDP_CLIENT_KEYSTORE_PI
+      CHEMIN_FICHIER_CONFIG_HSM: CHEMIN_FICHIER_CONFIG_HSM_PI
+      USER_PIN_HSM: USER_PIN_HSM_PI
+      ALIAS_CERTIFICAT_CLIENT_MTLS_HSM: ALIAS_CERTIFICAT_CLIENT_MTLS_HSM_PI
+      MDP_SERVEUR_KEYSTORE: MDP_SERVEUR_KEYSTORE_PI
+      #MDP_SERVEUR_TRUSTSTORE: MDP_SERVEUR_KEYSTORE_PI
+      MDP_SERVEUR_TRUSTSTORE: MDP_SERVEUR_TRUSTSTORE_PI
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    hostname: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.config.file=/etc/prometheus/web-config.yml'
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - prometheus-config:/etc/prometheus
+      - prometheus-data:/prometheus
+      - monitoring-cert:/etc/certs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    hostname: alertmanager
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - alertmanager-config:/etc/alertmanager
+      - alertmanager-data:/alertmanager
+      - monitoring-cert:/etc/certs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--web.config.file=/etc/alertmanager/web-config.yml'
+      - '--storage.path=/alertmanager'
+  grafana:
+    image: grafana/grafana:10.0.0
+    hostname: grafana
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
+    environment:
+      GF_SECURITY_ADMIN_USER: GRAFANA_ADMIN
+      GF_SECURITY_ADMIN_PASSWORD: GRAFANA_PASSWORD
+      GF_SERVER_PROTOCOL: https
+      GF_SERVER_CERT_FILE: /var/lib/grafana/ssl/server.crt
+      GF_SERVER_CERT_KEY: /var/lib/grafana/ssl/server.key
+      GF_SECURITY_ALLOW_EMBEDDING: 'true'
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-provisioning:/etc/grafana/provisioning
+      - monitoring-cert:/var/lib/grafana/ssl
+      - grafana-dashboards:/var/lib/grafana/dashboards
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.5.3
+    hostname: logstash
+    ports:
+      - target: 5044
+        published: 5044
+        protocol: tcp
+        mode: ingress
+      - target: 9600
+        published: 9600
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - logstash-config:/usr/share/logstash/config
+      - logstash-pipeline:/usr/share/logstash/pipeline
+      - config:/usr/share/config
+      - journalisation:/usr/share/logstash/journalisation
+    networks:
+      - aip_network
+    environment:
+      ELASTICSEARCH_SERVER_HOST: ELASTICSEARCH_SERVER_HOST_VALEUR
+      IP_ELASTICSEARCH: IP_ELASTICSEARCH_VALEUR
+      ES_HOSTS: "https://ELASTICSEARCH_SERVER_HOST_VALEUR:9200"
+      ELASTICSEARCH_USER_NAME: ELASTICSEARCH_USER_NAME_VALEUR
+      ELASTICSEARCH_USER_PWD: ELASTICSEARCH_USER_PWD_VALEUR
+      ELASTICSEARCH_TRUSTSTORE_PASSWORD: ELASTICSEARCH_TRUSTSTORE_PASSWORD_VALEUR
+      MDP_KAFKA_TRUSTSTORE: MDP_KAFKA_TRUSTSTORE_VALEUR
+    extra_hosts:
+      - ELASTICSEARCH_SERVER_HOST_VALEUR:IP_ELASTICSEARCH_VALEUR
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.3
+    hostname: kibana
+    ports:
+      - target: 5601
+        published: 5601
+        protocol: tcp
+        mode: ingress
+    command: sh -c './bin/kibana-plugin install https://github.com/pjhampton/kibana-prometheus-exporter/releases/download/8.5.3/kibanaPrometheusExporter-8.5.3.zip && /usr/local/bin/kibana-docker'
+    volumes:
+      - config-elasticsearch:/usr/share/kibana/config/
+      - kibana-cert:/certificats
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    extra_hosts:
+      - ELASTICSEARCH_SERVER_HOST_VALEUR:IP_ELASTICSEARCH_VALEUR
+  postgres:
+    image: postgres
+    volumes:
+      - keycloak-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: MDP_POSTGRES
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.3
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: MDP_POSTGRES
+      #KC_HOSTNAME_URL: https://192.168.41.45:8167
+      KC_HOSTNAME_URL: https://DNS_INTERNE:8443
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/host.cert
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/host.key
+      KC_METRICS_ENABLED: 'true'
+      KEYCLOAK_ADMIN: KEYCLOACK_ADMIN_USER_VALEUR
+      KEYCLOAK_ADMIN_PASSWORD: KEYCLOACK_ADMIN_PWD
+    ports:
+      - target: 8443
+        published: 8443
+        protocol: tcp
+        mode: ingress
+    command:
+      - start-dev
+      - --import-realm
+    volumes:
+      - realm-keycloak:/opt/keycloak/data/import
+      - certificats-keycloak:/etc/x509/https
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  aip-bo-backend:
+    image: bceao/aip-bo-backend:VERSION_AIP
+    ports:
+      - target: 8090
+        published: 8090
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - backend-bo-keycloak-truststore:/certificats/keycloak
+      - config-elasticsearch:/certificats/elasticsearch
+      - config-kafka:/certificats/kafka
+      - bo-backend-keystore:/certificats/bo-backend
+    networks:
+      - aip_network
+    extra_hosts:
+      - DNS_INTERNE:IP_INTERNE
+    environment:
+      CODE_MEMBRE_PARTICIPANT: CODE_MEMBRE_PARTICIPANT_VALEUR
+      NOM_PARTICIPANT: NOM_PARTICIPANT_VALEUR
+      SMTP_SERVER_HOST: ADRESSE_SERVEUR_SMTP
+      SMTP_USER_MAIL: ADRESSE_MAIL_UTILISATEUR
+      SMTP_USER_PASSWORD: PWD_MAIL_UTILISATEUR
+      #KEYCLOAK_SERVER: https://192.168.41.45:8167
+      KEYCLOAK_SERVER: https://DNS_INTERNE:8443
+      CHEMIN_TRUSTSTORE_KEYCLOAK: /certificats/keycloak/keycloak-truststore.p12
+      PASSWORD_TRUSTSTORE_KEYCLOAK: MDP_KEYCLOAK_TRUSTSTORE
+      KEYCLOAK_ADMIN_USER: KEYCLOACK_ADMIN_USER_VALEUR
+      KEYCLOAK_ADMIN_PASSWORD: KEYCLOACK_ADMIN_PWD
+      KEYCLOAK_ADMIN_REALM: master
+      #KEYCLOAK_JWT_ISSUER: https://192.168.41.45:8167/realms/pisfn
+      KEYCLOAK_JWT_ISSUER: https://DNS_INTERNE:8443/realms/pisfn
+      ELASTICSEARCH_SERVER_HOST: IP_ELASTICSEARCH_VALEUR
+      ELASTICSEARCH_SERVER_PORT: 9200
+      ELASTICSEARCH_TRUSTSTORE: /certificats/elasticsearch/elastic-certificates.p12
+      ELASTICSEARCH_TRUSTSTORE_PWD: ELASTICSEARCH_TRUSTSTORE_PASSWORD_VALEUR
+      #BACKOFFICE_URL: https://192.168.41.45:8162
+      BACKOFFICE_URL: https://DNS_INTERNE
+      ELASTICSEARCH_USER_NAME: ELASTICSEARCH_USER_NAME_VALEUR
+      ELASTICSEARCH_USER_PWD: ELASTICSEARCH_USER_PWD_VALEUR
+      KAFKA_SERVER_HOST: kafka:9094
+      KAFKA_TRUSTSTORE_LOCATION: /certificats/kafka/kafka.truststore.jks
+      KAFKA_TRUSTSTORE_PASSWORD: MDP_KAFKA_TRUSTSTORE_VALEUR
+      BO_BACKEND_KEYSTORE: /certificats/bo-backend/bo-backend-keystore.p12
+      BO_BACKEND_KEYSTORE_PWD: BO_BACKEND_KEYSTORE_PWD_VALEUR
+      KAFKA_PASSWORD: MDP_INTERFACEPARTICIPANT_KAFKA
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  aip-backoffice:
+    image: bceao/aip-bo-suivi:VERSION_AIP
+    ports:
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    volumes:
+      - bo-certificats:/etc/ssl
+    extra_hosts:
+      - DNS_INTERNE:IP_INTERNE
+    environment:
+      #URL_BACKEND_BO: https://192.168.41.45:8162
+      URL_BACKEND_BO: https://DNS_INTERNE:8090
+      CODE_MEMBRE_PARTICIPANT: CODE_MEMBRE_PARTICIPANT_VALEUR
+      TYPE_PARTICIPANT: TYPE_PARTICIPANT_VALEUR
+      NOM_PARTICIPANT: NOM_PARTICIPANT_VALEUR
+      #KEYCLOAK_SERVER: https://192.168.41.45:8167
+      KEYCLOAK_SERVER: https://DNS_INTERNE:8443
+      KEYCLOAK_REALM: pisfn
+      KEYCLOAK_CLIENT_ID: aip
+      #KIBANA_URL: https://192.168.41.45:8166
+      KIBANA_URL: https://DNS_INTERNE:5601
+      GRAFANA_URL: https://DNS_INTERNE:3000
+      #BO_HOSTNAME: 192.168.41.45
+      BO_HOSTNAME: DNS_INTERNE
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  zipkin:
+    image: openzipkin/zipkin:2.24
+    ports:
+      - target: 9411
+        published: 9411
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.7.0
+    command:
+      - '--kafka.server=kafka:9094'
+      - '--sasl.enabled'
+      - '--sasl.username=client'
+      - '--sasl.password=MDP_CLIENT_KAFKA'
+      - '--sasl.mechanism=plain'
+      - '--tls.enabled'
+      - '--tls.insecure-skip-tls-verify'
+    networks:
+      - aip_network
+    ports:
+      - target: 9308
+        published: 9308
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  bo-suivi-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    environment:
+      #SCRAPE_URI: https://192.168.41.45:8162/stub_status
+      SCRAPE_URI: https://DNS_INTERNE/stub_status
+      SSL_VERIFY: 'false'
+    networks:
+      - aip_network
+    ports:
+      - target: 9113
+        published: 9113
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  logstash-exporter:
+    image: leroymerlinbr/logstash-exporter:v0.0.1
+    command:
+      - '--logstash.endpoint="http://logstash:9600"'
+    networks:
+      - aip_network
+    ports:
+      - target: 9198
+        published: 9198
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+  elasticsearch_exporter:
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:v1.6.0
+    command:
+      - '--es.uri=https://ELASTICSEARCH_USER_NAME_VALEUR:ELASTICSEARCH_USER_PWD_VALEUR@ELASTICSEARCH_SERVER_HOST_VALEUR:9200'
+      - '--es.ca=/usr/share/kibana/config/elasticsearch-ca.pem'
+    volumes:
+      - config-elasticsearch:/usr/share/kibana/config
+    networks:
+      - aip_network
+    ports:
+      - 9114:9114
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.52.0
+    environment:
+      REDIS_ADDR: redis://redis:6379
+      REDIS_USER: monitoring
+      REDIS_PASSWORD: monitoring
+    networks:
+      - aip_network
+    ports:
+      - 9122:9121
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+networks:
+  aip_network:
+    #driver: overlay
+    external: true
+volumes:
+  redis-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/redis/local-data"
+  redis-users:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/redis/conf"
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config"
+  certificats:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats"
+  journalisation-moteur:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/moteur-traitement"
+  journalisation-participant:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/interface-participant"
+  journalisation-pi:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/interface-pi"
+  prometheus-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/prometheus"
+  prometheus-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/prometheus-data"
+  monitoring-cert:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/certificats"
+  alertmanager-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/alertmanager"
+  alertmanager-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/alertmanager-data"
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/grafana-data"
+  grafana-provisioning:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/grafana/provisioning"
+  grafana-dashboards:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/grafana/dashboards"
+  logstash-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/logstash/config"
+  logstash-pipeline:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/logstash/pipeline"
+  journalisation:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/journalisation"
+  config-elasticsearch:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config/elasticsearch"
+  kibana-cert:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/kibana"
+  keycloak-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/keycloak-data"
+  realm-keycloak:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/keycloak/realm"
+  certificats-keycloak:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/keycloak/certificats"
+  backend-bo-keycloak-truststore:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/truststore/keycloak"
+  config-kafka:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config/kafka"
+  bo-backend-keystore:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/bo-backend"
+  bo-certificats:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/bo"
+  zookeeper-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=NFS_SERVER_IP,nolock,soft,rw,nfsvers=4
+      device: ":/aip/zookeeper-data"

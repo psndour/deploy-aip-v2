@@ -1,0 +1,21 @@
+#!/bin/bash
+
+sudo mount -t nfs 10.0.96.2:/aip /Users/papesambandour/PC_CLOUD/FREE/PI-BCEAO/deploy-aip/certificats
+
+sudo mount -o resvport,nolocks 10.0.96.2:/aip/deployment /Users/papesambandour/PC_CLOUD/FREE/PI-BCEAO/deploy-aip
+
+sudo umount /Users/papesambandour/PC_CLOUD/FREE/PI-BCEAO/deploy-aip/certificats
+
+
+
+
+
+vagrant global-status --prune
+
+# Destroy all VMs
+vagrant destroy -f
+vagrant reload
+
+# Optionally, clean up any remaining Vagrant files
+vagrant global-status --prune
+vagrant box prune

@@ -1,0 +1,182 @@
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,850^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.beans.factory.support.DefaultSingletonBeanRegistry^[[0;39m: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@40ef3420: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.event.internalEventListenerProcessor,org.springframework.context.event.internalEventListenerFactory,bootstrapImportSelectorConfiguration,org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory,org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration,org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor,org.springframework.boot.context.internalConfigurationPropertiesBinderFactory,org.springframework.boot.context.internalConfigurationPropertiesBinder,org.springframework.boot.context.properties.BoundConfigurationProperties,org.springframework.boot.context.properties.EnableConfigurationPropertiesRegistrar.methodValidationExcludeFilter,spring.cloud.config-org.springframework.cloud.bootstrap.config.PropertySourceBootstrapProperties,org.springframework.cloud.bootstrap.encrypt.EncryptionBootstrapConfiguration,keyProperties,environmentDecryptApplicationListener,org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration,configurationPropertiesBeans,configurationPropertiesRebinder,org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration,propertySourcesPlaceholderConfigurer]; root of factory hierarchy
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,850^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.beans.factory.support.DefaultSingletonBeanRegistry^[[0;39m: Retrieved dependent beans for bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory': [org.springframework.context.annotation.internalConfigurationAnnotationProcessor]
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,889^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers$LoggingInstantiationFailureHandler^[[0;39m: Skipping org.springframework.boot.liquibase.LiquibaseChangelogMissingFailureAnalyzer: liquibase/exception/ChangeLogParseException
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,897^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers$LoggingInstantiationFailureHandler^[[0;39m: Skipping org.springframework.boot.autoconfigure.flyway.FlywayMigrationScriptMissingFailureAnalyzer: org.springframework.boot.autoconfigure.flyway.FlywayMigrationScriptMissingFailureAnalyzer
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,901^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers$LoggingInstantiationFailureHandler^[[0;39m: Skipping org.springframework.boot.autoconfigure.jdbc.HikariDriverConfigurationFailureAnalyzer: org/springframework/jdbc/CannotGetJdbcConnectionException
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,911^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,901^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers$LoggingInstantiationFailureHandler^[[0;39m: Skipping org.springframework.boot.autoconfigure.jdbc.HikariDriverConfigurationFailureAnalyzer: org/springframework/jdbc/CannotGetJdbcConnectionException
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,911^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.analyze(FailureAnalyzers.java:126)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.reportException(FailureAnalyzers.java:119)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:782)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,912^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.analyze(FailureAnalyzers.java:126)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.reportException(FailureAnalyzers.java:119)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:782)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,912^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.analyze(FailureAnalyzers.java:126)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.reportException(FailureAnalyzers.java:119)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:782)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,912^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.analyze(FailureAnalyzers.java:126)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.reportException(FailureAnalyzers.java:119)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:782)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,912^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.diagnostics.FailureAnalyzers^[[0;39m: FailureAnalyzer null failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | java.lang.NullPointerException: Cannot invoke "org.springframework.boot.diagnostics.FailureAnalyzer.analyze(java.lang.Throwable)" because "analyzer" is null
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.analyze(FailureAnalyzers.java:126)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.diagnostics.FailureAnalyzers.reportException(FailureAnalyzers.java:119)
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:808)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:782)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,913^[[0;39m ^[[39mTRACE^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.core.io.support.SpringFactoriesLoader^[[0;39m: Loaded [org.springframework.boot.diagnostics.FailureAnalysisReporter] names: [org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter]
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | ^[[30m2024-02-14 16:50:26,914^[[0;39m ^[[1;31mERROR^[[0;39m [^[[34mmain^[[0;39m] ^[[33morg.springframework.boot.SpringApplication^[[0;39m: Application run failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat server
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:182)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:357)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:156)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:124)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:938)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:409)
+
+
+
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at bceao.pisfn.aip.interfacepisfn.InterfacePisfnApplication.main(InterfacePisfnApplication.java:10)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat server
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:229)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:43)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:179)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        ... 22 common frames omitted
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | Caused by: java.lang.IllegalArgumentException: standardService.connector.startFailed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.catalina.core.StandardService.addConnector(StandardService.java:235)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.addPreviouslyRemovedConnectors(TomcatWebServer.java:282)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:213)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        ... 24 common frames omitted
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | Caused by: org.apache.catalina.LifecycleException: Protocol handler start failed
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.catalina.connector.Connector.startInternal(Connector.java:1042)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.catalina.core.StandardService.addConnector(StandardService.java:232)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        ... 26 common frames omitted
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | Caused by: java.lang.IllegalArgumentException: the trustAnchors parameter must be non-empty
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.AbstractJsseEndpoint.createSSLContext(AbstractJsseEndpoint.java:107)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.AbstractJsseEndpoint.initialiseSsl(AbstractJsseEndpoint.java:71)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:236)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1326)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:1412)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:665)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.catalina.connector.Connector.startInternal(Connector.java:1039)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        ... 28 common frames omitted
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    | Caused by: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.security.cert.PKIXParameters.setTrustAnchors(PKIXParameters.java:200)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.security.cert.PKIXParameters.<init>(PKIXParameters.java:157)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at java.base/java.security.cert.PKIXBuilderParameters.<init>(PKIXBuilderParameters.java:130)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.SSLUtilBase.getParameters(SSLUtilBase.java:508)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.SSLUtilBase.getTrustManagers(SSLUtilBase.java:439)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.SSLUtilBase.createSSLContext(SSLUtilBase.java:253)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        at org.apache.tomcat.util.net.AbstractJsseEndpoint.createSSLContext(AbstractJsseEndpoint.java:105)
+aip_interface-pi.1.rbow1ij8bdo3@srv-aip-bceao-int01    |        ... 34 common frames omitted

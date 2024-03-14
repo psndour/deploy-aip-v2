@@ -1,0 +1,5 @@
+.vagrant
+.idea
+.env
+vagrant.env
+vagrant.env.local

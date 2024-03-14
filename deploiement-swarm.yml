@@ -1,0 +1,682 @@
+version: '3.8'
+services:
+  redis:
+    image: redis/redis-stack-server:6.2.6-v3
+    hostname: redis
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - redis-data:/data
+      - redis-users:/conf
+    environment:
+      - REDIS_ARGS=--rdb-save-incremental-fsync yes --maxmemory-policy volatile-ttl --active-expire-effort 3 --appendonly no --no-appendfsync-on-rewrite no --hz 100 --dynamic-hz yes --aclfile /conf/users.acl
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  moteur-traitement:
+    image: bceao/moteur-traitement:2.0.0-RC1
+    hostname: moteur-traitement
+    volumes:
+      - config:/config
+      - certificats:/certificats
+      - journalisation-moteur:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: GqrwDgVOzdjUuzn2yzwZw==
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: 10
+      CODE_MEMBRE_PARTICIPANT: SNC003
+      NOM_PARTICIPANT: MOBILE CASH SA
+      TYPE_PARTICIPANT: F
+      KAFKA_PASSWORD: 9qM0ZuspFCtMDZu6WHYSLg==
+      REDIS_PASSWORD: 1V1eKws1tZxS3zLK7+fkGA==
+      CHEMIN_FICHIER_KEYSTORE_SIGNATURE: /certificats/SNC003.p12
+      ALIAS_CLE_SIGNATURE: SNC003
+      ALIAS_CERTIFICAT_SIGNATURE: SNC003
+      MDP_SIGNATURE_KEYSTORE: kNPdGWNEeDLZjzILtfssyA==
+      CHEMIN_FICHIER_CONFIG_HSM: 
+      USER_PIN_HSM: 
+      ALIAS_CLE_PRIVEE_HSM: 
+      ALIAS_CERTIFICAT_HSM: 
+  interface-participant:
+    image: bceao/interface-participant:2.0.0-RC1
+    hostname: interface-participant
+    ports:
+      - target: 8081
+        published: 8081
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - config:/config:ro
+      - certificats:/certificats:ro
+      - journalisation-participant:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: GqrwDgVOzdjUuzn2yzwZw==
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: 10
+      KAFKA_PASSWORD: 4+4jDSUDZUI2381z2XD1ig==
+      REDIS_PASSWORD: P1Cq3pzI6yq9Gp2Ns+rifA==
+      URL_BASE_PARTICIPANT: https://10.0.96.2:8444
+      MDP_CLIENT_TRUSTSTORE: HUHfM5trMbZR15NjjvmR7g==
+      MDP_CLIENT_KEY: 
+      MDP_CLIENT_KEYSTORE: zXw/XOsGflZoUQjoITQagQ==
+      CHEMIN_FICHIER_KEYSTORE_SIGNATURE: /certificats/SNC003.p12
+      ALIAS_CLE_SIGNATURE: SNC003
+      ALIAS_CERTIFICAT_SIGNATURE: SNC003
+      MDP_SIGNATURE_KEYSTORE: kNPdGWNEeDLZjzILtfssyA==
+      CHEMIN_FICHIER_CONFIG_HSM: 
+      USER_PIN_HSM: 
+      ALIAS_CLE_PRIVEE_HSM: 
+      ALIAS_CERTIFICAT_HSM: 
+      MDP_SERVEUR_KEYSTORE: OsuMnTnHjI3pkfmLAXsKNg==
+      MDP_SERVEUR_TRUSTSTORE: ACbPIuqZLRigBcXMmerPMA==
+  interface-pi:
+    image: bceao/interface-pisfn:2.0.0-RC1
+    hostname: interface-pi
+    ports:
+      - target: 8083
+        published: 8083
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - config:/config
+      - certificats:/certificats
+      - journalisation-pi:/logs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      TRUSTSTORE_LOCATION: /config/kafka/kafka.truststore.jks
+      TRUSTSTORE_PASSWORD: GqrwDgVOzdjUuzn2yzwZw==
+      REDIS_SERVER_HOST: redis
+      REDIS_SERVER_PORT: 6379
+      KAFKA_SERVER_HOST: kafka:9094
+      ZIPKIN_SERVER_HOST: zipkin
+      ZIPKIN_SERVER_PORT: 9411
+      ZIPKIN_ECHANTILLON: 10
+      KAFKA_PASSWORD: Jo71j0T5VVEtbE18qtzgAA==
+      REDIS_PASSWORD: wocOpsyqFLb13BHZJ+cz+w==
+      URL_BASE_PI: https://sandbox.api.pi-bceao.com
+      API_KEY_PI: jd1BtryEfM2iFYvc9TDei5Wx5PeOu6063UFJDat5
+      VERSION_API_RAC: v1
+      VERSION_API_SPI: v1
+      PROXY_HOST: 
+      PROXY_PORT: 
+      MDP_CLIENT_TRUSTSTORE: MyGkqHO/xevjAKNk/Ev6Bw==
+      CHEMIN_FICHIER_CLIENT_MTLS: file:/certificats/client-pi.p12
+      MDP_CLIENT_KEY: 
+      MDP_CLIENT_KEYSTORE: PaI79ltBxyrWZRsQx7GZGg==
+      CHEMIN_FICHIER_CONFIG_HSM: 
+      USER_PIN_HSM: 
+      ALIAS_CERTIFICAT_CLIENT_MTLS_HSM: 
+      MDP_SERVEUR_KEYSTORE: PaI79ltBxyrWZRsQx7GZGg==
+      MDP_SERVEUR_TRUSTSTORE: PaI79ltBxyrWZRsQx7GZGg==
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    hostname: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.config.file=/etc/prometheus/web-config.yml'
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - prometheus-config:/etc/prometheus
+      - prometheus-data:/prometheus
+      - monitoring-cert:/etc/certs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    hostname: alertmanager
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - alertmanager-config:/etc/alertmanager
+      - alertmanager-data:/alertmanager
+      - monitoring-cert:/etc/certs
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--web.config.file=/etc/alertmanager/web-config.yml'
+      - '--storage.path=/alertmanager'
+  grafana:
+    image: grafana/grafana:10.0.0
+    hostname: grafana
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: Admin1122
+      GF_SERVER_PROTOCOL: https
+      GF_SERVER_CERT_FILE: /var/lib/grafana/ssl/server.crt
+      GF_SERVER_CERT_KEY: /var/lib/grafana/ssl/server.key
+      GF_SECURITY_ALLOW_EMBEDDING: 'true'
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-provisioning:/etc/grafana/provisioning
+      - monitoring-cert:/var/lib/grafana/ssl
+      - grafana-dashboards:/var/lib/grafana/dashboards
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.5.3
+    hostname: logstash
+    ports:
+      - target: 5044
+        published: 5044
+        protocol: tcp
+        mode: ingress
+      - target: 9600
+        published: 9600
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - logstash-config:/usr/share/logstash/config
+      - logstash-pipeline:/usr/share/logstash/pipeline
+      - config:/usr/share/config
+      - journalisation:/usr/share/logstash/journalisation
+    networks:
+      - aip_network
+    environment:
+      ELASTICSEARCH_SERVER_HOST: sandbox-aip-elastic.free.sn
+      IP_ELASTICSEARCH: 10.0.96.2
+      ES_HOSTS: "https://sandbox-aip-elastic.free.sn:9200"
+      ELASTICSEARCH_USER_NAME: elastic
+      ELASTICSEARCH_USER_PWD: tVbWzaYor0sg3+lgkYqf
+      ELASTICSEARCH_TRUSTSTORE_PASSWORD: TmFPch3CrY8gfrPhYNRvFA==
+      MDP_KAFKA_TRUSTSTORE: GqrwDgVOzdjUuzn2yzwZw==
+    extra_hosts:
+      - sandbox-aip-elastic.free.sn:10.0.96.2
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.3
+    hostname: kibana
+    ports:
+      - target: 5601
+        published: 5601
+        protocol: tcp
+        mode: ingress
+    command: sh -c './bin/kibana-plugin install https://github.com/pjhampton/kibana-prometheus-exporter/releases/download/8.5.3/kibanaPrometheusExporter-8.5.3.zip && /usr/local/bin/kibana-docker'
+    volumes:
+      - config-elasticsearch:/usr/share/kibana/config/
+      - kibana-cert:/certificats
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+    extra_hosts:
+      - sandbox-aip-elastic.free.sn:10.0.96.2
+  postgres:
+    image: postgres
+    volumes:
+      - keycloak-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: jugjF5UZTRRXxRMBNtaw+g==
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.3
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: jugjF5UZTRRXxRMBNtaw+g==
+      #KC_HOSTNAME_URL: https://sandbox-aip.free.sn:8443
+      KC_HOSTNAME_URL: https://192.168.41.45:8167
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/host.cert
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/host.key
+      KC_METRICS_ENABLED: 'true'
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: Admin1122
+    ports:
+      - target: 8443
+        published: 8443
+        protocol: tcp
+        mode: ingress
+    command:
+      - start-dev
+      - --import-realm
+    volumes:
+      - realm-keycloak:/opt/keycloak/data/import
+      - certificats-keycloak:/etc/x509/https
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  aip-bo-backend:
+    image: bceao/aip-bo-backend:2.0.0-RC1
+    ports:
+      - target: 8090
+        published: 8090
+        protocol: tcp
+        mode: ingress
+    volumes:
+      - backend-bo-keycloak-truststore:/certificats/keycloak
+      - config-elasticsearch:/certificats/elasticsearch
+      - config-kafka:/certificats/kafka
+      - bo-backend-keystore:/certificats/bo-backend
+    networks:
+      - aip_network
+    extra_hosts:
+      - sandbox-aip.free.sn:10.0.96.2
+    environment:
+      CODE_MEMBRE_PARTICIPANT: SNC003
+      NOM_PARTICIPANT: MOBILE CASH SA
+      SMTP_SERVER_HOST: smtp01.free.sn
+      SMTP_USER_MAIL: aip-free@free.sn
+      SMTP_USER_PASSWORD: 
+      #KEYCLOAK_SERVER: https://sandbox-aip.free.sn:8443
+      KEYCLOAK_SERVER: https://192.168.41.45:8167
+      CHEMIN_TRUSTSTORE_KEYCLOAK: /certificats/keycloak/keycloak-truststore.p12
+      PASSWORD_TRUSTSTORE_KEYCLOAK: iLkEYPQ3Wed1tFfz1ldDQ==
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: Admin1122
+      KEYCLOAK_ADMIN_REALM: master
+      #KEYCLOAK_JWT_ISSUER: https://sandbox-aip.free.sn:8443/realms/pisfn
+      KEYCLOAK_JWT_ISSUER: https://192.168.41.45:8167/realms/pisfn
+      ELASTICSEARCH_SERVER_HOST: 10.0.96.2
+      ELASTICSEARCH_SERVER_PORT: 9200
+      ELASTICSEARCH_TRUSTSTORE: /certificats/elasticsearch/elastic-certificates.p12
+      ELASTICSEARCH_TRUSTSTORE_PWD: TmFPch3CrY8gfrPhYNRvFA==
+      #BACKOFFICE_URL: https://sandbox-aip.free.sn
+      BACKOFFICE_URL: https://192.168.41.45:8162
+      ELASTICSEARCH_USER_NAME: elastic
+      ELASTICSEARCH_USER_PWD: tVbWzaYor0sg3+lgkYqf
+      KAFKA_SERVER_HOST: kafka:9094
+      KAFKA_TRUSTSTORE_LOCATION: /certificats/kafka/kafka.truststore.jks
+      KAFKA_TRUSTSTORE_PASSWORD: GqrwDgVOzdjUuzn2yzwZw==
+      BO_BACKEND_KEYSTORE: /certificats/bo-backend/bo-backend-keystore.p12
+      BO_BACKEND_KEYSTORE_PWD: mwfU5mqJHY1jkPCsoBhIiw==
+      KAFKA_PASSWORD: 4+4jDSUDZUI2381z2XD1ig==
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  aip-backoffice:
+    image: bceao/aip-bo-suivi:2.0.0-RC1
+    ports:
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    volumes:
+      - bo-certificats:/etc/ssl
+    extra_hosts:
+      - sandbox-aip.free.sn:10.0.96.2
+    environment:
+      #URL_BACKEND_BO: https://sandbox-aip.free.sn:8090
+      URL_BACKEND_BO: https://192.168.41.45:8162
+      CODE_MEMBRE_PARTICIPANT: SNC003
+      TYPE_PARTICIPANT: F
+      NOM_PARTICIPANT: MOBILE CASH SA
+      #KEYCLOAK_SERVER: https://sandbox-aip.free.sn:8443
+      KEYCLOAK_SERVER: https://192.168.41.45:8167
+      KEYCLOAK_REALM: pisfn
+      KEYCLOAK_CLIENT_ID: aip
+      #KIBANA_URL: https://sandbox-aip.free.sn:5601
+      KIBANA_URL: https://192.168.41.45:8166
+      GRAFANA_URL: https://sandbox-aip.free.sn:3000
+      #BO_HOSTNAME: sandbox-aip.free.sn
+      BO_HOSTNAME: 192.168.41.45
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  zipkin:
+    image: openzipkin/zipkin:2.24
+    ports:
+      - target: 9411
+        published: 9411
+        protocol: tcp
+        mode: ingress
+    networks:
+      - aip_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.7.0
+    command:
+      - '--kafka.server=kafka:9094'
+      - '--sasl.enabled'
+      - '--sasl.username=client'
+      - '--sasl.password=A07H8YmzKxKhHYIAzCoMQ=='
+      - '--sasl.mechanism=plain'
+      - '--tls.enabled'
+      - '--tls.insecure-skip-tls-verify'
+    networks:
+      - aip_network
+    ports:
+      - target: 9308
+        published: 9308
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  bo-suivi-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    environment:
+      #SCRAPE_URI: https://sandbox-aip.free.sn/stub_status
+      SCRAPE_URI: https://192.168.41.45:8162/stub_status
+      SSL_VERIFY: 'false'
+    networks:
+      - aip_network
+    ports:
+      - target: 9113
+        published: 9113
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  logstash-exporter:
+    image: leroymerlinbr/logstash-exporter:v0.0.1
+    command:
+      - '--logstash.endpoint="http://logstash:9600"'
+    networks:
+      - aip_network
+    ports:
+      - target: 9198
+        published: 9198
+        protocol: tcp
+        mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+  elasticsearch_exporter:
+    image: quay.io/prometheuscommunity/elasticsearch-exporter:v1.6.0
+    command:
+      - '--es.uri=https://elastic:tVbWzaYor0sg3+lgkYqf@sandbox-aip-elastic.free.sn:9200'
+      - '--es.ca=/usr/share/kibana/config/elasticsearch-ca.pem'
+    volumes:
+      - config-elasticsearch:/usr/share/kibana/config
+    networks:
+      - aip_network
+    ports:
+      - 9114:9114
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.52.0
+    environment:
+      REDIS_ADDR: redis://redis:6379
+      REDIS_USER: monitoring
+      REDIS_PASSWORD: monitoring
+    networks:
+      - aip_network
+    ports:
+      - 9122:9121
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+networks:
+  aip_network:
+#    driver: overlay
+    external: true
+volumes:
+  redis-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/redis/local-data"
+  redis-users:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/redis/conf"
+  config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config"
+  certificats:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats"
+  journalisation-moteur:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/moteur-traitement"
+  journalisation-participant:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/interface-participant"
+  journalisation-pi:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/journalisation/interface-pi"
+  prometheus-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/prometheus"
+  prometheus-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/prometheus-data"
+  monitoring-cert:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/certificats"
+  alertmanager-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/alertmanager"
+  alertmanager-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/alertmanager-data"
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/grafana-data"
+  grafana-provisioning:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/grafana/provisioning"
+  grafana-dashboards:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/monitoring/grafana/dashboards"
+  logstash-config:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/logstash/config"
+  logstash-pipeline:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/logstash/pipeline"
+  journalisation:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/journalisation"
+  config-elasticsearch:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config/elasticsearch"
+  kibana-cert:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/kibana"
+  keycloak-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/keycloak-data"
+  realm-keycloak:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/keycloak/realm"
+  certificats-keycloak:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/config/keycloak/certificats"
+  backend-bo-keycloak-truststore:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/truststore/keycloak"
+  config-kafka:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/config/kafka"
+  bo-backend-keystore:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/bo-backend"
+  bo-certificats:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,ro,nfsvers=4
+      device: ":/aip/certificats/bo"
+  zookeeper-data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=10.0.96.2,nolock,soft,rw,nfsvers=4
+      device: ":/aip/zookeeper-data"
