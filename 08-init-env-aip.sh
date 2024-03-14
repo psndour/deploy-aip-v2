@@ -120,7 +120,7 @@ PROXY_PORT_VALEUR=
 CHEMIN_FICHIER_CLIENT_MTLS_PI=file:/certificats/client-pi.p12
 # Propriété optionnelle qui permet de renseigner le mot de passe de la clé privée utilisée lorsque l’AIP contacte l’API de PI.
 # La laisser vide si la clé privée n'est pas protégée par un mot de passe
-MDP_CLIENT_KEY_PI="$MDP_CLE_PRIVEE_MTL"
+MDP_CLIENT_KEY_PI=
 #G Propriété optionnelle qui  permet de renseigner le mot de passe du fichier keystore utilisé lorsque l’AIP contacte l’API de PI.
 MDP_CLIENT_KEYSTORE_PI=
 #Propriété optionnelle utilisée pour renseigner le chemin du fichier de configuration du fournisseur SUNPKCS11.

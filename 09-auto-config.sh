@@ -14,6 +14,7 @@ update_line_value "MDP_SIGNATURE_KEYSTORE_PARTICIPANT=" "$(function_bash "$PATH_
 #SET PASSWORD PI M-TLS CERT
 PATH_CREDENTIAL="$AIP_PATH/certificats/credentials-mtls.txt"
 update_line_value "MDP_CLIENT_KEYSTORE_PI=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-keystore-MTLS")" "$PATH_ENV_AIP" ""
+update_line_value "MDP_CLIENT_KEY_PI=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-keystore-MTLS")" "$PATH_ENV_AIP" ""
 update_line_value "MDP_SERVEUR_TRUSTSTORE_PI=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-truststore-MTLS")" "$PATH_ENV_AIP" ""
 #ADDED ON TROUBLE SHOOTING
 update_line_value "MDP_CLIENT_TRUSTSTORE_PI=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-truststore-MTLS")" "$PATH_ENV_AIP" ""
