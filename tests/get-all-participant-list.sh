@@ -14,3 +14,5 @@ curl --cert $ROOT_PATH_AIP/aip-client.pem --key $ROOT_PATH_AIP/aip-client.key  -
   "msgId": "'"MSNC003$random_string"'",
   "requete": "ALL"
 }'
+
+ https://sandbox-aip.free.sn:8081
