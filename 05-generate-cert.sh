@@ -79,11 +79,11 @@ echo "==================GENERATE CERTIFICAT PUBLIC CERTS========================
 cat <<EOF > keystore-srv-public.env
 # C'est le chemin vers le fichier de certification de l'autorité publique qui a délivré le certificat
 # utilisé pour protéger les endpoints de l'AIP dans sa communication par mTLS avec PI (sens: PI -> AIP)
-CHEMIN_CERT_CA_PUBLIC="$PATH_CERT_ON_HOST/mtls/chain.pem"
+CHEMIN_CERT_CA_PUBLIC="$PATH_CERT_ON_HOST/public-free/chain.pem"
 # C'est le chemin vers le fichier de clé privée utilisée pour protéger les endpoints de l'AIP dans sa communication par mTLS avec PI (sens: PI -> AIP)
-CHEMIN_CLE_PRIVEE_SRV_AIP="$PATH_CERT_ON_HOST/mtls/$CODE_MEMBRE.key"
+CHEMIN_CLE_PRIVEE_SRV_AIP="$PATH_CERT_ON_HOST/public-free/$CODE_MEMBRE.key"
 # C'est le chemin vers le fichier certificat utilisé pour protéger les endpoints de l'AIP dans sa communication par mTLS avec PI (sens: PI -> AIP)
-CHEMIN_CERT_SRV_AIP="$PATH_CERT_ON_HOST/mtls/$CODE_MEMBRE.pem"
+CHEMIN_CERT_SRV_AIP="$PATH_CERT_ON_HOST/public-free/$CODE_MEMBRE.pem"
 EOF
 bash "$CERTS_PATH/generer-keystore-public-server.sh"
 #fiexed changed name
