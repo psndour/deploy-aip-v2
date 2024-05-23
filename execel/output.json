@@ -1,0 +1,9 @@
+INSERT INTO categories (label, code, created_at, updated_at) VALUES
+('Plaintes Reclamations', 'plaintesReclamations', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('Requetes Assistance', 'requetesAssistance', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('Renseignements Informations', 'renseignementsInformations', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('Freemoney Porte Monnaie', 'FreemoneyPorteMonnaie', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('Freemoney Distribution', 'FreemoneyDistribution', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('Ventes', 'ventes', '2024-05-23 17:07:56', '2024-05-23 17:07:56'),
+('D'Informatiqeu', 'd'informatiqeu', '2024-05-23 17:07:56', '2024-05-23 17:07:56'); 
+ 
