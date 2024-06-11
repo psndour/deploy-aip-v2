@@ -4,7 +4,7 @@ sudo yum update -y
 sudo yum install -y vim python net-tools telnet nmap git wget tar unzip curl openssl
 sudo wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
 sudo yum -y install ./jdk-17_linux-x64_bin.rpm
-
+#delete docker
 sudo yum remove docker \
                   docker-client \
                   docker-client-latest \
@@ -13,7 +13,14 @@ sudo yum remove docker \
                   docker-latest-logrotate \
                   docker-logrotate \
                   docker-engine
-
+sudo yum remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo rm -rf /var/lib/docker
+sudo  rm -rf /etc/docker
+sudo rm -rf /var/lib/containerd
+sudo rm  /etc/yum.repos.d/docker-ce.repo
+yum clean all
+yum makecache
+#end docker delete
 sudo yum install -y yum-utils vim git net-tools
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
