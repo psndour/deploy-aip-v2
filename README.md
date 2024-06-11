@@ -98,6 +98,18 @@ vi /certificats/mtls/$CODE_MEMBRE.pem
 #????
 #touch /certificats/mtls/pi.pem
 ```
+* Configure PI cert on your server for public certs
+```
+sudo mkdir -p /certificats/public-free
+#Certificat CA chainé fournit par Digicert pour *.free.sn 
+vi /certificats/public-free/chain.pem
+#Certifucat privé generer par free
+vi /certificats/public-free/$CODE_MEMBRE.key
+#Certficat public generer par Free et signé PI CERT
+vi /certificats/public-free/$CODE_MEMBRE.pem
+#????
+#touch /certificats/mtls/pi.pem
+```
 ## 4. Installation script one by one
 
 ### 1. Install pre-requis
@@ -151,7 +163,7 @@ bash 09-auto-config.sh
 ### 8. Run aip 
 
 ```angular2html
-bash bash bootstrap.sh
+bash  bootstrap.sh
 ```
 
 

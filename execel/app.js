@@ -25,22 +25,32 @@ const unslugify = (text) => {
 };
 const slugify = (text) => {
     console.log(`TO SLUG ${text}`)
-    return text.toLowerCase().replace(/\s+/g, '_');
+    return text.toLowerCase().replace(/\s+/g, '_').replace("'",'');
 };
 const escapeSingleQuotes = (text) => {
-    return text.replace(/'/g, "''");
+    return text.replace(/'/g, "");
 };
 const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' '); // Format as YYYY-MM-DD HH:MM:SS
 // Log the data
 console.log(data);
 const categories = [...new Set(data.map((line)=> Object.values(line)[1]))];
 const types_services = [...new Set(data.map((line)=> Object.values(line)[2]))];
-const services = data.map((line)=> {
+let services = data.map((line)=> {
     return {
         "Categorie": Object.values(line)[1],
         "typeService": Object.values(line)[2],
-        "code": Object.values(line)[3],
+        "code": (Object.values(line)[3]),
+        "code_search": (Object.values(line)[3]).toLowerCase(),
     }
+});
+// Step 1: Use a Set to store unique codes
+const uniqueCodes = new Set();
+
+// Step 2: Filter out duplicate objects
+ services = services.filter(item => {
+    const isDuplicate = uniqueCodes.has(item.code_search);
+    uniqueCodes.add(item.code_search);
+    return !isDuplicate;
 });
 
 let queries1 = "INSERT INTO categories (label, code, created_at, updated_at) VALUES\n";
@@ -49,19 +59,19 @@ let queries3 = "INSERT INTO services (label, code, category_id,type_service_id, 
 
 const categoriesChunk = categories.map(category => {
     const label = unslugify(category);
-    const code = (category);
+    const code = slugify(category);
     return `('${label}', '${code}', '${currentDate}', '${currentDate}')`;
 });
 const typesServicesChunk = types_services.map(typeService => {
     const label = unslugify(typeService);
-    const code = (typeService);
+    const code = slugify(typeService);
     return `('${label}', '${code}', '${currentDate}', '${currentDate}')`;
 });
 const servicesChunk = services.map(service => {
     console.log(service)
-    const label =  unslugify(service.code);
-    const code = (service.code);
-   let  categorySubRequest =` (SELECT id FROM categories where code = '${service.Categorie})'`;
+    const label =  unslugify(escapeSingleQuotes(service.code)); // unslugify(escapeSingleQuotes(service.code));
+    const code = slugify(service.code);
+   let  categorySubRequest =` (SELECT id FROM categories where code = '${service.Categorie}' )`;
    let  typeServiceSubRequest = ` (SELECT id FROM type_services where code = '${service.typeService}')`;
     return `('${label}', '${code}',${categorySubRequest},${typeServiceSubRequest}, '${currentDate}', '${currentDate}')`;
 });

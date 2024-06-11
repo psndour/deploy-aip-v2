@@ -77,12 +77,12 @@ sudo firewall-cmd --add-port=8446/tcp --permanent
 sudo firewall-cmd --add-port=8447/tcp --permanent
 #SERVER_PORT
 sudo firewall-cmd --reload
-#TEST
-sudo firewall-cmd --list-ports
-docker rm my-nginx  -f
-docker run --name my-nginx -p 8444:80 -d nginx
-docker run --name my-nginx -p 8445:80 -d nginx
-docker run --name my-nginx -p 8446:80 -d nginx
-docker run --name my-nginx -p 8447:80 -d nginx
-
-sudo lsof -i :8444 -t | xargs -r kill -SIGTERM
+##TEST
+#sudo firewall-cmd --list-ports
+#docker rm my-nginx  -f
+#docker run --name my-nginx -p 8444:80 -d nginx
+#docker run --name my-nginx -p 8445:80 -d nginx
+#docker run --name my-nginx -p 8446:80 -d nginx
+#docker run --name my-nginx -p 8447:80 -d nginx
+#
+#sudo lsof -i :8444 -t | xargs -r kill -SIGTERM

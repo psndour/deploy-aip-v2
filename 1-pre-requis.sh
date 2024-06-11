@@ -41,10 +41,10 @@ sudo systemctl enable firewalld
 #DOMAIN
 #ADD HOST
 
-sudo echo "10.0.96.2 sandbox-kafka.free.sn" | sudo tee -a /etc/hosts
-sudo echo "10.0.96.2 sandbox-aip-elastic.free.sn" | sudo tee -a /etc/hosts
-sudo echo "10.0.96.2 sandbox-aip.free.sn" | sudo tee -a /etc/hosts
-sudo echo "10.0.96.2 sandbox-backend.free.sn" | sudo tee -a /etc/hosts
+#sudo echo "10.0.96.2 sandbox-kafka.free.sn" | sudo tee -a /etc/hosts
+#sudo echo "10.0.96.2 sandbox-aip-elastic.free.sn" | sudo tee -a /etc/hosts
+#sudo echo "10.0.96.2 sandbox-aip.free.sn" | sudo tee -a /etc/hosts
+#sudo echo "10.0.96.2 sandbox-backend.free.sn" | sudo tee -a /etc/hosts
 
 if [ "$NODE_HAS_MANAGER" -eq 1 ]; then
     echo "MANAGER"
