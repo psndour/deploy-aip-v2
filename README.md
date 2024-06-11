@@ -7,8 +7,6 @@ To install it on your infrastructure, want to respect 3 steps:
 ## 1. Step One download the script from GitHub
 
 ```
-sudo -s
-sudo yum install -y git 
 git clone https://github.com/psndour/deploy-aip-v2 /deploy-aip-v2
 cd /deploy-aip-v2
 cp /certificats/.env /deploy-aip-v2/.env
