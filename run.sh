@@ -4,7 +4,7 @@ set -a; source function.sh; set +a
 echo "===========================START INSTALLATION======================="
 #STEP
 cd "$DEPLOY_PATH" || exit
-bash 1-pre-requis.sh
+bash 1-pre-requis-lite.sh
 cd "$DEPLOY_PATH" || exit
 bash 07-port.sh
 cd "$DEPLOY_PATH" || exit
