@@ -5,7 +5,7 @@ cd "$AIP_PATH"  || exit
 bash "$AIP_PATH/desinstaller.sh"
 cd "$DEPLOY_PATH" || exit
 sudo bash uninstall-certs.sh
-#sudo bash 03-uninstall-elastic.sh
+sudo bash 03-uninstall-elastic.sh
 sudo rm -rf "$AIP_PATH"
 sudo rm -rf "$ELASTIC_PATH"
 sudo rm -rf "$CERTS_PATH"

@@ -8,7 +8,7 @@ bash 1-pre-requis-lite.sh
 cd "$DEPLOY_PATH" || exit
 bash 07-port.sh
 cd "$DEPLOY_PATH" || exit
-#bash 02-deploy-elastic.sh
+bash 02-deploy-elastic.sh
 cd "$DEPLOY_PATH" || exit
 bash  04-download-aip.sh
 cd "$DEPLOY_PATH" || exitls
