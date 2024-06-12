@@ -1,1 +1,0 @@
- TO JOIN RUN COMMAND :      docker swarm join --token SWMTKN-1-3uy5qogq9zwzxcr8771cf2wl86zkvco131natfe8oeomgmqoew-31lpfb0lbse29rhkyt46cfg93 127.0.0.1:2377
