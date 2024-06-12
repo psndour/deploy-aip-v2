@@ -11,4 +11,7 @@ sudo systemctl restart nfs
 #docker swarm join --token SWMTKN-1-375500ahmsqqr5kvnobij1r4h69nhhwb9ur4nks3y1opkxfted-dapt0xsd0252z2222zv07dclu 10.0.96.2:2377
 
 #sudo mount 10.0.96.2:/aip /test
+#sudo mount 10.0.96.2:/aip /test
 #sudo umount /test
+#sudo grep -i nfs /var/log/messages
+#sudo grep -i nfs /var/log/secure
