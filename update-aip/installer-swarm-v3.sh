@@ -231,7 +231,7 @@ echo "#################### DEBUT DEPLOIEMENT DE KAFKA ##########################
 docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT_KAFKA --with-registry-auth aip
 sleep 5m
 #todo delete after
-exit 0
+#exit 0
 echo "#################### FIN DEPLOIEMENT DE KAFKA ############################"
 #docker stack deploy -c <(docker compose -f $CHEMIN_FICHIER_DEPLOIEMENT config) aip
 echo "#################### DEBUT DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
