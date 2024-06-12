@@ -61,9 +61,10 @@ sudo firewall-cmd --add-port=8170/tcp --permanent
 sudo firewall-cmd --add-port=8444/tcp --permanent
 
 #NFS
-sudo firewall-cmd --permanent  --add-service=nfs
-sudo firewall-cmd --permanent  --add-service=mountd
-sudo firewall-cmd --permanent  --add-service=rpc-bind
+
+sudo firewall-cmd --permanent --zone=public --add-service=nfs
+sudo firewall-cmd --permanent --zone=public --add-service=mountd
+sudo firewall-cmd --permanent --zone=public --add-service=rpc-bind
 sudo firewall-cmd --reload
 
 # Reload firewall to apply changes
