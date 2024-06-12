@@ -228,14 +228,14 @@ sed -i "s|MDP_SERVEUR_KEYSTORE_PI|$MDP_SERVEUR_KEYSTORE_PI|" $CHEMIN_FICHIER_DEP
 sed -i "s|MDP_SERVEUR_TRUSTSTORE_PI|$MDP_SERVEUR_TRUSTSTORE_PI|" $CHEMIN_FICHIER_DEPLOIEMENT
 
 echo "#################### DEBUT DEPLOIEMENT DE KAFKA ##########################"
-docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT_KAFKA --with-registry-auth aip
+docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT_KAFKA --detach=false --with-registry-auth aip
 sleep 5m
 #todo delete after
 #exit 0
 echo "#################### FIN DEPLOIEMENT DE KAFKA ############################"
 #docker stack deploy -c <(docker compose -f $CHEMIN_FICHIER_DEPLOIEMENT config) aip
 echo "#################### DEBUT DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
-docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT --with-registry-auth aip
+docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT --detach=false --with-registry-auth aip
 echo "#################### FIN DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
 echo "En attente de la disponibilité de Kibana ..."
 while ! curl -k -s -o /dev/null -w "%{http_code}" https://$DNS_INTERNE:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf:true" -u "$ELASTICSEARCH_USER_NAME:$ELASTICSEARCH_USER_PWD"; do
