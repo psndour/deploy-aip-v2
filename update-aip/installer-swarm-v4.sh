@@ -71,12 +71,12 @@ cp -R $CHEMIN_REP_LOGSTASH $CHEMIN_REP_NFS_LOCAL
 cp -R $CHEMIN_REP_MONITORING_LOCAL $CHEMIN_REP_NFS_LOCAL
 #Copier le répertoire "monitoring" dans le répertoire de partage du NFS
 cp -R $CHEMIN_REP_REDIS $CHEMIN_REP_NFS_LOCAL
-sudo chown -R nobody:nogroup $CHEMIN_REP_NFS_LOCAL/certificats
+sudo chown -R nobody:nobody $CHEMIN_REP_NFS_LOCAL/certificats
 mkdir $CHEMIN_REP_KIBANA_CERT $CHEMIN_TRUSTSTORE $CHEMIN_REP_BO_CERT $CHEMIN_REP_BO_BACKEND_CERTIFICATS
 mkdir $CHEMIN_TRUSTSTORE/keycloak
 cp $BO_SUIVI_CHEMIN_SSL_CERTIFICAT $CHEMIN_REP_KIBANA_CERT/kibana-server.crt
 cp $BO_SUIVI_CHEMIN_SSL_CLE $CHEMIN_REP_KIBANA_CERT/kibana-server.key
-sudo chown -R nobody:nogroup $CHEMIN_REP_NFS_LOCAL/config/keycloak
+sudo chown -R nobody:nobody $CHEMIN_REP_NFS_LOCAL/config/keycloak
 #Copier les fichier nécessaires à la sécurisation de keycloak
 mkdir $CHEMIN_KEYCLOAK_CERTIFICATS
 cp $BO_SUIVI_CHEMIN_SSL_CERTIFICAT $CHEMIN_KEYCLOAK_CERTIFICATS/host.cert
@@ -153,7 +153,7 @@ echo "MDP_MOTEURTRAITEMENT_REDIS=$MDP_MOTEURTRAITEMENT_REDIS" >> .env
 echo "MDP_INTERFACEPI_REDIS=$MDP_INTERFACEPI_REDIS" >> .env
 echo "MDP_POSTGRES=$MDP_POSTGRES" >> .env
 source .env
-sudo chown -R nobody:nogroup $CHEMIN_REP_NFS_LOCAL/*
+sudo chown -R nobody:nobody $CHEMIN_REP_NFS_LOCAL/*
 sudo chmod -R 777  $CHEMIN_REP_NFS_LOCAL/*
 sudo umount -f $CHEMIN_REP_NFS_LOCAL
 rm -rf $CHEMIN_REP_NFS_LOCAL
