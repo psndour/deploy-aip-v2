@@ -5,11 +5,11 @@ set -a; source function.sh; set +a
 cd "$AIP_PATH" || exit
 #installer-swarm.sh
 echo "===========================UPDATE SWARM SCRIPT DEPLOY======================="
-#rm -rf "$AIP_PATH/installer-swarm.sh"
+rm -rf "$AIP_PATH/installer-swarm.sh"
 #rm -rf "$AIP_PATH/desinstaller.sh"
 #rm -rf "$AIP_PATH/kafka.yml"
 #rm -rf "$AIP_PATH/deploiement-swarm-tpl.yml"
-#cp "$DEPLOY_PATH/update-aip/installer-swarm-v3.sh" "$AIP_PATH/installer-swarm.sh"
+cp "$DEPLOY_PATH/update-aip/installer-swarm-v4.sh" "$AIP_PATH/installer-swarm.sh"
 #cp "$DEPLOY_PATH/update-aip/installer-swarm.sh" "$AIP_PATH/installer-swarm.sh"
 #cp "$DEPLOY_PATH/update-aip/installer-swarm-2.sh" "$AIP_PATH/installer-swarm.sh"
 #cp "$DEPLOY_PATH/update-aip/desinstaller.sh" "$AIP_PATH/desinstaller.sh"
