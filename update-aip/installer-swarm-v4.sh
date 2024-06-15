@@ -238,6 +238,21 @@ echo "#################### FIN DEPLOIEMENT DE KAFKA ############################
 #docker stack deploy -c <(docker compose -f $CHEMIN_FICHIER_DEPLOIEMENT config) aip
 echo "#################### DEBUT DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
 docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT --detach=false --with-registry-auth aip
+#docker stack deploy -c /deploiement-outils-docker/kafka.yml --detach=false --with-registry-auth aip
+#sudo journalctl -u docker.service
+#sudo journalctl -u docker.service -f
+#sudo chown -R nfsnobody:nfsnobody /aip/zookeeper-data
+#sudo yum install ipvsadm
+#sudo modprobe -- ip_vs
+#sudo modprobe -- ip_vs_rr
+#sudo modprobe -- ip_vs_wrr
+#sudo modprobe -- ip_vs_sh
+# lsmod | grep ip_vs
+#vi /etc/modules-load.d/ipvs.conf
+#ip_vs
+#ip_vs_rr
+#ip_vs_wrr
+#ip_vs_sh
 echo "#################### FIN DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
 echo "En attente de la disponibilité de Kibana ..."
 while ! curl -k -s -o /dev/null -w "%{http_code}" https://$DNS_INTERNE:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf:true" -u "$ELASTICSEARCH_USER_NAME:$ELASTICSEARCH_USER_PWD"; do
