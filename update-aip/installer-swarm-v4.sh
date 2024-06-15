@@ -230,7 +230,7 @@ sed -i "s|ALIAS_CERTIFICAT_CLIENT_MTLS_HSM_PI|$ALIAS_CERTIFICAT_CLIENT_MTLS_HSM_
 sed -i "s|MDP_SERVEUR_KEYSTORE_PI|$MDP_SERVEUR_KEYSTORE_PI|" $CHEMIN_FICHIER_DEPLOIEMENT
 sed -i "s|MDP_SERVEUR_TRUSTSTORE_PI|$MDP_SERVEUR_TRUSTSTORE_PI|" $CHEMIN_FICHIER_DEPLOIEMENT
 #todo delete after
-exit 0
+#exit 0
 echo "#################### DEBUT DEPLOIEMENT DE KAFKA ##########################"
 docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT_KAFKA --detach=false --with-registry-auth aip
 sleep 5m
@@ -239,6 +239,7 @@ echo "#################### FIN DEPLOIEMENT DE KAFKA ############################
 echo "#################### DEBUT DEPLOIEMENT DES AUTRES COMPOSANTS ##############"
 docker stack deploy -c $CHEMIN_FICHIER_DEPLOIEMENT --detach=false --with-registry-auth aip
 #docker stack deploy -c /deploiement-outils-docker/kafka.yml --detach=false --with-registry-auth aip
+#docker stack deploy -c /deploiement-outils-docker/deploiement-swarm.yml --detach=false --with-registry-auth aip
 #sudo journalctl -u docker.service
 #sudo journalctl -u docker.service -f
 #sudo chown -R nfsnobody:nfsnobody /aip/zookeeper-data
