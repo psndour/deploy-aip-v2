@@ -12,7 +12,7 @@ sudo  chmod -R 777 /free_backend_disk/*
 
 sudo cp "$CERTS_PATH/aip/client.p12"  /free_backend_disk/app-certs/aip-client.p12
 sudo cp "$CERTS_PATH/aip/aip-client.pem"  /free_backend_disk/app-certs/sandbox-aip.free.sn.crt
-sudo cp "$CERTS_PATH/aip/client-truststore.p12"  /free_backend_disk/app-certs/client-truststore.p12
+sudo cp "$CERTS_PATH/aip/client-truststore.p12"  /free_backend_disk/app-certs/aip-client-truststore.p12
 sudo cp "$CERTS_PATH/backend-participant/server-backend-keystore.p12"   /free_backend_disk/app-certs/server-backend-keystore.p12
 sudo cp "$CERTS_PATH/backend-participant/server-backend-truststore.p12"   /free_backend_disk/app-certs/server-backend-truststore.p12
 
