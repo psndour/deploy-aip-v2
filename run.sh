@@ -5,6 +5,7 @@ echo "===========================START INSTALLATION======================="
 #STEP
 cd "$DEPLOY_PATH" || exit
 bash 1-pre-requis-lite.sh
+#bash 1-pre-requis.sh
 cd "$DEPLOY_PATH" || exit
 bash 07-port.sh
 cd "$DEPLOY_PATH" || exit
