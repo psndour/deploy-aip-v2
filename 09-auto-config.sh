@@ -6,6 +6,8 @@ PATH_CREDENTIAL="$AIP_PATH/credentials.txt"
 PATH_ENV_AIP="$AIP_PATH/.env"
 update_line_value "MDP_CLIENT_TRUSTSTORE_PARTICIPANT=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-truststore-client")" "$PATH_ENV_AIP" ""
 update_line_value "MDP_CLIENT_KEYSTORE_PARTICIPANT=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-keystore-client")" "$PATH_ENV_AIP" ""
+#before empty : change to same mot-de-passe-keystore-client
+update_line_value "MDP_CLIENT_KEY_PARTICIPANT=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-keystore-client")" "$PATH_ENV_AIP" ""
 update_line_value "MDP_SERVEUR_KEYSTORE_PARTICIPANT=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-keystore-serveur")" "$PATH_ENV_AIP" ""
 update_line_value "MDP_SERVEUR_TRUSTSTORE_PARTICIPANT=" "$(function_bash "$PATH_CREDENTIAL" "mot-de-passe-truststore-serveur")" "$PATH_ENV_AIP" ""
 #SET PASSWORD PI SIGNATURE CERT
