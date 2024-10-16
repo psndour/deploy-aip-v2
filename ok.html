@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-content {
+            width: 75%;
+            padding-left: 20px;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>Tableau de bord</h2>
+        <ul>
+            <li>Historique des constructions</li>
+            <li>Relations entre les builds</li>
+            <li>Vérifier les empreintes numériques</li>
+            <li>Mes vues</li>
+            <li>Identifiants</li>
+        </ul>
+        <h3>File d'attente des constructions</h3>
+        <p>File d'attente des constructions vide</p>
+        <h3>État du lanceur de compilations</h3>
+        <p>0/2</p>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Historique des constructions</h2>
+                <div>
+                    <button class="button">Tous</button>
+                    <button class="button button-secondary">+</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>S</th>
+                    <th>M</th>
+                    <th>Nom du projet</th>
+                    <th>Dernier succès</th>
+                    <th>Dernier échec</th>
+                    <th>Dernière durée</th>
+                    <th># Issues</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>B2B</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>FTTX</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>IT-PRODUCTS</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>MFS</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>MIDDLEWARE</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>📁</td>
+                    <td>☀️</td>
+                    <td>TOUT UME</td>
+                    <td>s. o.</td>
+                    <td>s. o.</td>
+                    <td>ND</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>Icône: S M L</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

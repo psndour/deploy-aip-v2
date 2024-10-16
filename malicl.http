@@ -1,0 +1,6 @@
+GET https://www.free.sn
+Content-Type: application/json
+
+{
+ "name":"ok"
+}
